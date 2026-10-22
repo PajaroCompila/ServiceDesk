@@ -1,0 +1,51 @@
+<div class="brand">
+  <img src="/images/brand/pajaro-azul.png" alt="Almacén Pájaro Azul" width="753" height="66" />
+  <div class="product-name">
+    <span class="product-icon"><i class="pi pi-headphones" aria-hidden="true"></i></span>ServiceDesk
+  </div>
+</div>
+
+<p class="nav-label">ESPACIO DE TRABAJO</p>
+<nav aria-label="Navegación principal">
+  <a
+    class="nav-item"
+    routerLink="/dashboard"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+    (click)="navigate.emit()"
+  >
+    <i class="pi pi-th-large" aria-hidden="true"></i><span>Dashboard</span
+    ><span class="active-dot"></span>
+  </a>
+  <button class="nav-item" type="button" disabled>
+    <i class="pi pi-ticket" aria-hidden="true"></i><span>Tickets</span>
+  </button>
+  <a
+    class="nav-item"
+    routerLink="/usuarios"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+    (click)="navigate.emit()"
+  >
+    <i class="pi pi-users" aria-hidden="true"></i><span>Usuarios</span
+    ><span class="active-dot"></span>
+  </a>
+  <button class="nav-item" type="button" disabled>
+    <i class="pi pi-chart-bar" aria-hidden="true"></i><span>Reportes</span>
+  </button>
+  <button class="nav-item" type="button" disabled>
+    <i class="pi pi-cog" aria-hidden="true"></i><span>Configuración</span>
+  </button>
+</nav>
+
+<div class="sidebar-bottom">
+  <div class="support-note">
+    <span class="support-icon"><i class="pi pi-comments" aria-hidden="true"></i></span>
+    <strong>Cerca de tu equipo.</strong>
+    <p>Un solo lugar para dar seguimiento a cada solución.</p>
+    <span>ALMACÉN PÁJARO AZUL</span>
+  </div>
+  <a class="nav-item logout" routerLink="/login"
+    ><i class="pi pi-sign-out" aria-hidden="true"></i><span>Cerrar sesión</span></a
+  >
+</div>

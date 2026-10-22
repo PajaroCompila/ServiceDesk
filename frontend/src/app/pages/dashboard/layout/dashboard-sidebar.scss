@@ -1,0 +1,134 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.brand {
+  padding: 3px 12px 36px;
+}
+.brand img {
+  display: block;
+  width: 182px;
+  height: auto;
+  filter: var(--logo-filter);
+}
+.product-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+}
+.product-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: var(--accent);
+  background: var(--surface);
+  font-size: 17px;
+}
+.nav-label {
+  margin: 0 14px 13px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+}
+nav {
+  display: grid;
+  gap: 7px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 17px;
+  border: 0;
+  border-radius: 25px;
+  background: transparent;
+  color: var(--text-secondary);
+  text-align: left;
+  text-decoration: none;
+  font-size: 12px;
+}
+.nav-item i {
+  font-size: 16px;
+}
+.nav-item:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.nav-item.active {
+  color: var(--accent);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+}
+.active-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.nav-item:not(.active) .active-dot {
+  display: none;
+}
+.nav-item:not(.active):not(:disabled):hover {
+  background: var(--surface-hover);
+}
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 60px;
+}
+.support-note {
+  position: relative;
+  overflow: hidden;
+  padding: 22px 17px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--accent-soft);
+}
+.support-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 15px;
+  border-radius: 11px;
+  color: var(--accent);
+  background: var(--surface);
+  font-size: 18px;
+}
+.support-note strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+.support-note p {
+  margin: 8px 0 18px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.support-note > span:last-child {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.logout {
+  margin-top: 20px;
+}
+.logout:hover {
+  background: var(--surface);
+}
+
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}

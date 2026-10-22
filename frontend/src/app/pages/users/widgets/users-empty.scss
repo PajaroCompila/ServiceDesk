@@ -1,0 +1,91 @@
+.eyebrow,
+.empty-eyebrow {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+}
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 59px;
+  text-align: center;
+}
+.empty-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 0 26px;
+  border: 10px solid var(--surface-subtle);
+  border-radius: 25px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 29px;
+}
+.empty-icon span {
+  position: absolute;
+  right: -14px;
+  bottom: -9px;
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 3px solid var(--surface);
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--surface);
+  font-size: 10px;
+}
+h3 {
+  margin: 10px 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+.empty-state p {
+  max-width: 430px;
+  margin: 0 0 23px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.filtered > i {
+  color: var(--accent);
+  font-size: 30px;
+}
+@media (max-width: 650px) {
+  .empty-state {
+    padding-inline: 18px;
+  }
+  h3 {
+    font-size: 17px;
+  }
+  .empty-eyebrow {
+    font-size: 8px;
+  }
+}
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 41px;
+  padding: 11px 17px;
+  border: 0;
+  border-radius: 10px;
+  background: #287bea;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover {
+  background: #1768d4;
+}
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

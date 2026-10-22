@@ -1,0 +1,133 @@
+<app-shell section="Usuarios" path="/usuarios">
+  <header class="page-heading">
+    <div>
+      <span class="eyebrow">EL EQUIPO DETRÁS DE CADA SOLUCIÓN</span>
+      <h1>Administración de usuarios</h1>
+      <p>Cree y organice las personas que utilizarán ServiceDesk.</p>
+    </div>
+    <button class="primary-button" type="button" (click)="create()">
+      <i class="pi pi-plus" aria-hidden="true"></i>Nuevo usuario
+    </button>
+  </header>
+
+  <div class="notice" role="status" aria-live="polite" [class.has-message]="message()">
+    @if (message()) {
+      <i class="pi pi-check-circle" aria-hidden="true"></i><span>{{ message() }}</span
+      ><button type="button" (click)="message.set('')" aria-label="Cerrar mensaje">
+        <i class="pi pi-times" aria-hidden="true"></i>
+      </button>
+    }
+  </div>
+
+  <app-users-summary
+    [total]="users().length"
+    [active]="activeCount()"
+    [shared]="sharedEmails().size"
+  />
+
+  <section class="directory-card" aria-labelledby="directory-title">
+    <header class="directory-heading">
+      <div>
+        <h2 id="directory-title">
+          Directorio de usuarios <span class="count">{{ users().length }}</span>
+        </h2>
+        <p>Personas, cuentas y preferencias de notificaciones.</p>
+      </div>
+      <span class="preview-badge"><i class="pi pi-eye" aria-hidden="true"></i>Vista previa</span>
+    </header>
+    <div class="filters">
+      <label class="search-field"
+        ><span class="sr-only">Buscar usuarios</span><i class="pi pi-search" aria-hidden="true"></i
+        ><input
+          type="search"
+          placeholder="Buscar por nombre, usuario o correo"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
+      /></label>
+      <label class="filter-field"
+        ><span>Estado</span
+        ><select
+          aria-label="Filtrar por estado"
+          [ngModel]="statusFilter()"
+          (ngModelChange)="statusFilter.set($event)"
+        >
+          <option value="">Todos los estados</option>
+          @for (status of statuses; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select></label
+      >
+      <label class="filter-field"
+        ><span>Rol</span
+        ><select
+          aria-label="Filtrar por rol"
+          [ngModel]="roleFilter()"
+          (ngModelChange)="roleFilter.set($event)"
+        >
+          <option value="">Todos los roles</option>
+          @for (role of roles; track role) {
+            <option [value]="role">{{ role }}</option>
+          }
+        </select></label
+      >
+    </div>
+
+    @if (users().length === 0) {
+      <app-users-empty (action)="create()" />
+    } @else if (filteredUsers().length === 0) {
+      <app-users-empty [filtered]="true" (action)="clearFilters()" />
+    } @else {
+      <app-user-table
+        [users]="filteredUsers()"
+        [sharedEmails]="sharedEmails()"
+        (view)="view($event)"
+        (edit)="edit($event)"
+        (toggleStatus)="toggleStatus($event)"
+      />
+    }
+    <footer class="directory-footer">
+      <i class="pi pi-info-circle" aria-hidden="true"></i
+      ><span>Los cambios de esta vista son temporales y se restablecen al recargar.</span>
+      @if (users().length > 0) {
+        <span class="result-count"
+          >{{ filteredUsers().length }} de {{ users().length }} usuarios</span
+        >
+      }
+    </footer>
+  </section>
+  <aside class="shared-note">
+    <span class="note-icon"><i class="pi pi-envelope" aria-hidden="true"></i></span>
+    <div>
+      <strong>Personas diferentes. Un mismo buzón, si lo necesitan.</strong>
+      <p>
+        Cada persona tendrá su nombre de usuario. El correo puede compartirse entre varios
+        integrantes del equipo.
+      </p>
+    </div>
+  </aside>
+
+  @if (dialog() === 'create' || dialog() === 'edit') {
+    <app-preview-dialog
+      [title]="dialog() === 'edit' ? 'Editar usuario' : 'Nuevo usuario'"
+      subtitle="Complete los datos de la persona y sus preferencias de correo."
+      (dismiss)="closeDialog()"
+    >
+      <app-user-form
+        [initial]="selectedUser()"
+        [users]="users()"
+        (saved)="save($event)"
+        (cancelled)="closeDialog()"
+      />
+    </app-preview-dialog>
+  }
+  @if (dialog() === 'detail') {
+    @if (selectedUser(); as user) {
+      <app-preview-dialog
+        title="Detalle del usuario"
+        subtitle="Información de la persona y su buzón de notificaciones."
+        (dismiss)="closeDialog()"
+        ><app-user-detail [user]="user" [users]="users()" (edit)="edit(user)"
+      /></app-preview-dialog>
+    }
+  }
+</app-shell>

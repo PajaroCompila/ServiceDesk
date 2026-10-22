@@ -1,0 +1,198 @@
+<form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off" novalidate>
+  <div class="form-body">
+    <p class="required-note">Los campos con <span>*</span> son obligatorios.</p>
+    <section aria-labelledby="personal-title">
+      <header class="section-heading">
+        <span class="section-icon"><i class="pi pi-user" aria-hidden="true"></i></span>
+        <div>
+          <h3 id="personal-title">Información personal</h3>
+          <p>Los datos de la persona que se suma al equipo.</p>
+        </div>
+        <span class="step-number">01</span>
+      </header>
+      <div class="fields-grid">
+        <label
+          >Nombres <span class="required">*</span
+          ><input
+            id="firstName"
+            formControlName="firstName"
+            placeholder="Ingrese los nombres"
+            required
+            autofocus
+            [attr.aria-invalid]="invalid('firstName')"
+            aria-describedby="firstName-error"
+          />
+          @if (invalid('firstName')) {
+            <small class="error" id="firstName-error">Ingrese los nombres.</small>
+          }
+        </label>
+        <label
+          >Apellidos <span class="required">*</span
+          ><input
+            id="lastName"
+            formControlName="lastName"
+            placeholder="Ingrese los apellidos"
+            required
+            [attr.aria-invalid]="invalid('lastName')"
+            aria-describedby="lastName-error"
+          />
+          @if (invalid('lastName')) {
+            <small class="error" id="lastName-error">Ingrese los apellidos.</small>
+          }
+        </label>
+        <label class="full-width"
+          >Nombre completo<input
+            [value]="generatedName()"
+            placeholder="Se genera a partir de nombres y apellidos"
+            readonly
+            aria-readonly="true"
+        /></label>
+        <label
+          >Número de empleado <span class="optional">Opcional</span
+          ><input formControlName="employeeNumber" placeholder="Ej. EMP-001"
+        /></label>
+        <label
+          >Teléfono <span class="optional">Opcional</span
+          ><input formControlName="phone" type="tel" placeholder="Ej. +504 9999-9999"
+        /></label>
+        <label
+          >Sucursal <span class="required">*</span
+          ><input
+            formControlName="branch"
+            placeholder="Ingrese la sucursal"
+            required
+            [attr.aria-invalid]="invalid('branch')"
+          />
+          @if (invalid('branch')) {
+            <small class="error">Ingrese la sucursal.</small>
+          }
+        </label>
+        <label
+          >Departamento <span class="required">*</span
+          ><input
+            formControlName="department"
+            placeholder="Ingrese el departamento"
+            required
+            [attr.aria-invalid]="invalid('department')"
+          />
+          @if (invalid('department')) {
+            <small class="error">Ingrese el departamento.</small>
+          }
+        </label>
+        <label class="full-width"
+          >Cargo <span class="required">*</span
+          ><input
+            formControlName="position"
+            placeholder="Ingrese el cargo"
+            required
+            [attr.aria-invalid]="invalid('position')"
+          />
+          @if (invalid('position')) {
+            <small class="error">Ingrese el cargo.</small>
+          }
+        </label>
+      </div>
+    </section>
+
+    <section aria-labelledby="account-title">
+      <header class="section-heading">
+        <span class="section-icon"><i class="pi pi-id-card" aria-hidden="true"></i></span>
+        <div>
+          <h3 id="account-title">Cuenta</h3>
+          <p>Un nombre de usuario para cada persona.</p>
+        </div>
+        <span class="step-number">02</span>
+      </header>
+      <div class="fields-grid">
+        <label class="full-width"
+          >Nombre de usuario <span class="required">*</span
+          ><input
+            formControlName="username"
+            placeholder="Ej. ohernandez"
+            required
+            autocapitalize="none"
+            spellcheck="false"
+            [attr.aria-invalid]="invalid('username')"
+            aria-describedby="username-help"
+          /><small id="username-help"
+            >Elija un nombre diferente para cada persona. Será su identificador de acceso.</small
+          >
+          @if (invalid('username')) {
+            <small class="error">Ingrese el nombre de usuario.</small>
+          }
+        </label>
+        <label
+          >Rol <span class="required">*</span
+          ><select formControlName="role" required>
+            @for (role of roles; track role) {
+              <option [value]="role">{{ role }}</option>
+            }
+          </select></label
+        >
+        <label
+          >Estado <span class="required">*</span
+          ><select formControlName="status" required>
+            @for (status of statuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
+          </select></label
+        >
+        <label
+          >Contraseña temporal
+          @if (!initial()) {
+            <span class="required">*</span>
+          }
+          <input
+            formControlName="password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Ingrese una contraseña"
+            [required]="!initial()"
+            [attr.aria-invalid]="invalid('password')"
+          />
+          @if (invalid('password')) {
+            <small class="error">Ingrese una contraseña temporal.</small>
+          }
+        </label>
+        <label
+          >Confirmar contraseña
+          @if (!initial()) {
+            <span class="required">*</span>
+          }
+          <input
+            formControlName="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Repita la contraseña"
+            [required]="!initial()"
+            [attr.aria-invalid]="
+              invalid('confirmPassword') ||
+              (form.hasError('passwordMismatch') && form.controls.confirmPassword.touched)
+            "
+          />
+          @if (invalid('confirmPassword')) {
+            <small class="error">Confirme la contraseña.</small>
+          } @else if (form.hasError('passwordMismatch') && form.controls.confirmPassword.touched) {
+            <small class="error">Las contraseñas no coinciden.</small>
+          }
+        </label>
+      </div>
+      <p class="section-note">
+        <i class="pi pi-info-circle" aria-hidden="true"></i>La contraseña es solo una representación
+        del formulario y no se conservará.
+      </p>
+    </section>
+
+    <app-notification-fields [form]="form" [submitted]="submitted()" [shared]="sharedEmail()" />
+  </div>
+  <footer class="form-footer">
+    <span><i class="pi pi-eye" aria-hidden="true"></i>Vista previa · Cambios temporales</span>
+    <div>
+      <button type="button" class="cancel-button" (click)="cancelled.emit()">Cancelar</button
+      ><button type="submit" class="save-button">
+        <i class="pi pi-check" aria-hidden="true"></i
+        >{{ initial() ? 'Guardar cambios' : 'Guardar usuario' }}
+      </button>
+    </div>
+  </footer>
+</form>

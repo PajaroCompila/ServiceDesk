@@ -1,0 +1,99 @@
+<div class="detail-body">
+  <header class="person-heading">
+    <span class="avatar">{{ initials(user()) }}</span>
+    <div>
+      <h3>{{ fullName(user()) }}</h3>
+      <span class="username">{{ user().username }}</span>
+    </div>
+    <span class="status" [class.inactive]="user().status === 'Inactivo'">{{ user().status }}</span>
+  </header>
+  <div class="section-header">
+    <h4>Información del usuario</h4>
+    <button type="button" (click)="edit.emit()">
+      <i class="pi pi-pencil" aria-hidden="true"></i>Editar información
+    </button>
+  </div>
+  <dl class="info-grid">
+    <div>
+      <dt>Sucursal</dt>
+      <dd>{{ user().branch }}</dd>
+    </div>
+    <div>
+      <dt>Departamento</dt>
+      <dd>{{ user().department }}</dd>
+    </div>
+    <div>
+      <dt>Cargo</dt>
+      <dd>{{ user().position }}</dd>
+    </div>
+    <div>
+      <dt>Rol</dt>
+      <dd>{{ user().role }}</dd>
+    </div>
+    @if (user().employeeNumber) {
+      <div>
+        <dt>Número de empleado</dt>
+        <dd>{{ user().employeeNumber }}</dd>
+      </div>
+    }
+    @if (user().phone) {
+      <div>
+        <dt>Teléfono</dt>
+        <dd>{{ user().phone }}</dd>
+      </div>
+    }
+  </dl>
+
+  <section class="mail-card" aria-labelledby="shared-mail-title">
+    <div class="mail-heading">
+      <span class="mail-icon"><i class="pi pi-envelope" aria-hidden="true"></i></span>
+      <div>
+        <span class="field-label">Correo asociado</span><strong>{{ user().email }}</strong>
+      </div>
+      @if (associatedUsers().length > 1) {
+        <span class="shared-label" title="Esta dirección está asociada con más de un usuario."
+          >Correo compartido</span
+        >
+      }
+    </div>
+    <h4 id="shared-mail-title">Personas asociadas al mismo correo</h4>
+    <ul>
+      @for (person of associatedUsers(); track person.id) {
+        <li>
+          <span>{{ initials(person) }}</span
+          >{{ fullName(person) }}
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="preferences" aria-labelledby="preferences-title">
+    <div class="section-header">
+      <h4 id="preferences-title">Preferencias de notificaciones</h4>
+      <span class="notification-status" [class.enabled]="user().notifications.enabled"
+        ><i
+          [class]="user().notifications.enabled ? 'pi pi-bell' : 'pi pi-bell-slash'"
+          aria-hidden="true"
+        ></i
+        >{{ user().notifications.enabled ? 'Activadas' : 'Desactivadas' }}</span
+      >
+    </div>
+    <ul>
+      @for (event of events; track event.key) {
+        <li>
+          <span>{{ event.shortLabel }}</span
+          ><span [class.selected]="user().notifications[event.key]"
+            ><i
+              [class]="
+                user().notifications[event.key] ? 'pi pi-check-circle' : 'pi pi-minus-circle'
+              "
+              aria-hidden="true"
+            ></i
+            >{{ user().notifications[event.key] ? 'Seleccionado' : 'No seleccionado' }}</span
+          >
+        </li>
+      }
+    </ul>
+  </section>
+  <app-notification-preview [email]="user().email" />
+</div>

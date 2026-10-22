@@ -1,0 +1,239 @@
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 16px;
+}
+h3 {
+  margin: 0 0 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.step-number {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+}
+.email-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+label {
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+}
+.required {
+  color: var(--accent);
+}
+input[type='email'] {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  margin-top: 7px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 400;
+}
+input::placeholder {
+  color: var(--muted);
+  font-size: 11px;
+}
+input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.error {
+  display: block;
+  margin-top: 6px;
+  color: var(--danger);
+  font-size: 10px;
+  font-weight: 400;
+}
+.email-help {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+.shared-info:not(:empty) {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px;
+  margin-top: 13px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.shared-info i {
+  margin-top: 4px;
+}
+.preferences {
+  margin-top: 22px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 12px 15px;
+  cursor: pointer;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.main-switch {
+  background: var(--surface-subtle);
+}
+.main-switch strong {
+  display: block;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+}
+.main-switch small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.event-switches {
+  padding: 3px 0;
+}
+.event-switches .switch-row + .switch-row {
+  border-top: 1px solid var(--border);
+}
+input[role='switch'] {
+  position: relative;
+  appearance: none;
+  flex-shrink: 0;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-hover);
+  cursor: pointer;
+}
+input[role='switch']::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+}
+input[role='switch']:checked {
+  background: #287bea;
+  border-color: #287bea;
+}
+input[role='switch']:checked::after {
+  left: 16px;
+  background: white;
+}
+.sender-card {
+  margin-top: 23px;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-subtle);
+}
+.sender-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.sender-heading i {
+  color: var(--accent);
+}
+h4 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+.sender-heading span {
+  margin-left: auto;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: 9px;
+}
+.sender-card p {
+  margin: 9px 0 0;
+  color: var(--text-secondary);
+  font-size: 10px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.sender-address strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.sender-card button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  margin-top: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 10px;
+  cursor: not-allowed;
+}
+.sender-card > small {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 9px;
+}
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .email-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  header p {
+    font-size: 10px;
+  }
+  .sender-heading span {
+    margin-left: 0;
+  }
+  input[type='email'] {
+    font-size: 16px;
+  }
+}

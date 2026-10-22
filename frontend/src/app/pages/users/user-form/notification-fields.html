@@ -1,0 +1,86 @@
+<section [formGroup]="form()" aria-labelledby="notifications-title">
+  <header>
+    <span class="section-icon"><i class="pi pi-envelope" aria-hidden="true"></i></span>
+    <div>
+      <h3 id="notifications-title">Correo y notificaciones</h3>
+      <p>El buzón y los eventos que le interesan a esta persona.</p>
+    </div>
+    <span class="step-number">03</span>
+  </header>
+  <div class="email-fields">
+    <label
+      >Correo electrónico <span class="required">*</span
+      ><input
+        formControlName="email"
+        type="email"
+        placeholder="persona@almacenpajaroazul.com"
+        required
+        [attr.aria-invalid]="invalid('email')"
+        aria-describedby="email-help email-error"
+      />
+      @if (invalid('email')) {
+        <small id="email-error" class="error">Ingrese un correo electrónico válido.</small>
+      }
+    </label>
+    <label
+      >Confirmar correo electrónico <span class="required">*</span
+      ><input
+        formControlName="confirmEmail"
+        type="email"
+        placeholder="Repita el correo electrónico"
+        required
+        [attr.aria-invalid]="
+          invalid('confirmEmail') ||
+          (form().hasError('emailMismatch') && form().get('confirmEmail')?.touched)
+        "
+      />
+      @if (invalid('confirmEmail')) {
+        <small class="error">Confirme el correo electrónico.</small>
+      } @else if (form().hasError('emailMismatch') && form().get('confirmEmail')?.touched) {
+        <small class="error">Los correos no coinciden.</small>
+      }
+    </label>
+  </div>
+  <p class="email-help" id="email-help">
+    Este correo puede estar asociado con más de un usuario cuando se utiliza un buzón compartido.
+  </p>
+  <div class="shared-info" role="status" aria-live="polite">
+    @if (shared()) {
+      <i class="pi pi-info-circle" aria-hidden="true"></i
+      ><span
+        >Este correo también está asociado con otro usuario. Ambos recibirán notificaciones en el
+        mismo buzón.</span
+      >
+    }
+  </div>
+
+  <div class="preferences" formGroupName="notifications">
+    <label class="switch-row main-switch"
+      ><span
+        ><strong>Recibir notificaciones por correo</strong
+        ><small>Preferencia de correo para esta persona.</small></span
+      ><input type="checkbox" role="switch" formControlName="enabled"
+    /></label>
+    <div class="event-switches">
+      @for (event of events; track event.key) {
+        <label class="switch-row"
+          ><span>{{ event.label }}</span
+          ><input type="checkbox" role="switch" [formControlName]="event.key"
+        /></label>
+      }
+    </div>
+  </div>
+
+  <aside class="sender-card">
+    <div class="sender-heading">
+      <i class="pi pi-send" aria-hidden="true"></i>
+      <h4>Correo de notificaciones</h4>
+      <span>Configuración pendiente</span>
+    </div>
+    <p class="sender-address">Remitente previsto: <strong>soporte@almacenpajaroazul.com</strong></p>
+    <p>El envío real de correos se conectará posteriormente desde el backend.</p>
+    <button type="button" disabled aria-describedby="mail-test-help">
+      <i class="pi pi-envelope" aria-hidden="true"></i>Enviar correo de prueba</button
+    ><small id="mail-test-help">Disponible cuando se configure el servicio de correo.</small>
+  </aside>
+</section>

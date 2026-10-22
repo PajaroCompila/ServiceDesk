@@ -1,0 +1,19 @@
+<app-shell section="Dashboard" path="/dashboard">
+  <section class="page-heading" aria-labelledby="dashboard-title">
+    <div>
+      <div class="heading-eyebrow">TODO EN UN SOLO LUGAR</div>
+      <h1 id="dashboard-title">Dashboard</h1>
+      <p>Un vistazo a tu mesa de ayuda.</p>
+    </div>
+    <div class="heading-meta">
+      <span class="demo-label"><span></span>Datos de ejemplo</span>
+      <div class="date-range">
+        <i class="pi pi-calendar" aria-hidden="true"></i>21 — 27 sep, 2026
+      </div>
+    </div>
+  </section>
+
+  <app-dashboard-stats />
+  <app-dashboard-charts />
+  <div class="details-grid"><app-recent-tickets /><app-activity-feed /></div>
+</app-shell>

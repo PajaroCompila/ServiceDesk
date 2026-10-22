@@ -1,0 +1,105 @@
+<p class="scroll-hint">
+  <i class="pi pi-arrows-h" aria-hidden="true"></i>Deslice para ver todos los datos y acciones.
+</p>
+<div
+  class="table-scroll"
+  role="region"
+  aria-label="Lista de usuarios de la vista previa"
+  tabindex="0"
+>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">Nombre completo</th>
+        <th scope="col">Sucursal</th>
+        <th scope="col">Departamento</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Notificaciones</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users(); track user.id) {
+        <tr>
+          <td>
+            <span class="username">{{ user.username }}</span>
+          </td>
+          <td>
+            <div class="person">
+              <span class="avatar" aria-hidden="true">{{ initials(user) }}</span
+              ><strong>{{ fullName(user) }}</strong>
+            </div>
+          </td>
+          <td>{{ user.branch }}</td>
+          <td>{{ user.department }}</td>
+          <td class="email-cell">
+            <span>{{ user.email }}</span>
+            @if (shared(user)) {
+              <span
+                class="shared-label"
+                tabindex="0"
+                title="Esta dirección está asociada con más de un usuario."
+                aria-label="Correo compartido. Esta dirección está asociada con más de un usuario."
+                ><i class="pi pi-users" aria-hidden="true"></i>Correo compartido</span
+              >
+            }
+          </td>
+          <td>
+            <span class="role-label">{{ user.role }}</span>
+          </td>
+          <td>
+            <span class="status-label" [class.inactive]="user.status === 'Inactivo'"
+              ><i></i>{{ user.status }}</span
+            >
+          </td>
+          <td>
+            <span class="notifications" [class.enabled]="user.notifications.enabled"
+              ><i
+                [class]="user.notifications.enabled ? 'pi pi-bell' : 'pi pi-bell-slash'"
+                aria-hidden="true"
+              ></i
+              >{{ user.notifications.enabled ? 'Activadas' : 'Desactivadas' }}</span
+            >
+          </td>
+          <td>
+            <div class="actions">
+              <button
+                type="button"
+                data-action="view"
+                title="Ver"
+                [attr.aria-label]="'Ver a ' + user.username"
+                (click)="view.emit(user)"
+              >
+                <i class="pi pi-eye" aria-hidden="true"></i></button
+              ><button
+                type="button"
+                data-action="edit"
+                title="Editar"
+                [attr.aria-label]="'Editar a ' + user.username"
+                (click)="edit.emit(user)"
+              >
+                <i class="pi pi-pencil" aria-hidden="true"></i></button
+              ><button
+                type="button"
+                data-action="toggle-status"
+                [title]="user.status === 'Activo' ? 'Desactivar' : 'Activar'"
+                [attr.aria-label]="
+                  (user.status === 'Activo' ? 'Desactivar a ' : 'Activar a ') + user.username
+                "
+                (click)="toggleStatus.emit(user)"
+              >
+                <i
+                  [class]="user.status === 'Activo' ? 'pi pi-user-minus' : 'pi pi-user-plus'"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

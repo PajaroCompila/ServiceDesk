@@ -1,0 +1,54 @@
+<div class="dashboard-shell" [class.menu-open]="sidebarOpen()">
+  <a class="skip-link" [attr.href]="path() + '#workspace-content'">Ir al contenido</a>
+
+  <aside class="sidebar" id="main-sidebar" aria-label="Menú principal">
+    <app-dashboard-sidebar (navigate)="closeSidebar()" />
+  </aside>
+
+  <button
+    class="sidebar-backdrop"
+    type="button"
+    [hidden]="!sidebarOpen()"
+    (click)="closeSidebar()"
+    aria-label="Cerrar menú"
+  ></button>
+
+  <div class="workspace">
+    <header class="topbar">
+      <div class="topbar-start">
+        <button
+          #menuButton
+          class="menu-button"
+          type="button"
+          (click)="sidebarOpen.set(!sidebarOpen())"
+          [attr.aria-expanded]="sidebarOpen()"
+          aria-controls="main-sidebar"
+          [attr.aria-label]="sidebarOpen() ? 'Cerrar menú' : 'Abrir menú'"
+        >
+          <i [class]="sidebarOpen() ? 'pi pi-times' : 'pi pi-bars'" aria-hidden="true"></i>
+        </button>
+        <div class="breadcrumb">
+          <i class="pi pi-home" aria-hidden="true"></i
+          ><i class="pi pi-angle-right" aria-hidden="true"></i><span>{{ section() }}</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <app-theme-toggle />
+        <span class="topbar-divider"></span>
+        <div class="profile">
+          <span class="profile-avatar">PA</span>
+          <div><strong>Equipo Pájaro Azul</strong><span>Mesa de ayuda</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="workspace-content" tabindex="-1">
+      <ng-content />
+
+      <footer class="page-footer">
+        <span><strong>ServiceDesk</strong><span class="footer-dot">·</span>Almacén Pájaro Azul</span
+        ><span>Diseñado para estar cerca.</span>
+      </footer>
+    </main>
+  </div>
+</div>

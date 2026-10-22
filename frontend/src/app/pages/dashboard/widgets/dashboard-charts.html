@@ -1,0 +1,126 @@
+<section class="charts-grid" aria-label="Gráficas de tickets">
+  <article class="chart-card trend-card">
+    <header>
+      <div>
+        <h2>Actividad de tickets</h2>
+        <p>Solicitudes recibidas y resueltas durante la semana</p>
+      </div>
+      <span class="period">Últimos 7 días</span>
+    </header>
+    <div class="chart-legend">
+      <span><i class="legend-dot received"></i>Recibidos</span
+      ><span><i class="legend-dot resolved"></i>Resueltos</span>
+    </div>
+    <svg
+      class="trend-chart"
+      viewBox="0 0 640 238"
+      role="img"
+      aria-labelledby="trend-title trend-description"
+    >
+      <title id="trend-title">Actividad de tickets del 21 al 27 de septiembre</title>
+      <desc id="trend-description">{{ trendDescription }}</desc>
+      <defs>
+        <linearGradient id="received-area" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--accent)" stop-opacity=".16" />
+          <stop offset="100%" stop-color="var(--accent)" stop-opacity=".01" />
+        </linearGradient>
+      </defs>
+      @for (value of gridLines; track value) {
+        <line
+          x1="38"
+          x2="623"
+          [attr.y1]="200 - value * 3"
+          [attr.y2]="200 - value * 3"
+          class="grid-line"
+        />
+        <text x="24" [attr.y]="204 - value * 3" text-anchor="end" class="axis-label">
+          {{ value }}
+        </text>
+      }
+      <path [attr.d]="receivedCurve + ' L 609 200 L 45 200 Z'" fill="url(#received-area)" />
+      <path [attr.d]="receivedCurve" class="chart-line received-line" />
+      <path [attr.d]="resolvedCurve" class="chart-line resolved-line" />
+      @for (day of trend.days; track day; let index = $index) {
+        <circle
+          [attr.cx]="point(trend.received[index], index).x"
+          [attr.cy]="point(trend.received[index], index).y"
+          r="3.5"
+          class="chart-point received-point"
+        >
+          <title>{{ day }}: {{ trend.received[index] }} recibidos</title>
+        </circle>
+        <circle
+          [attr.cx]="point(trend.resolved[index], index).x"
+          [attr.cy]="point(trend.resolved[index], index).y"
+          r="3"
+          class="chart-point resolved-point"
+        >
+          <title>{{ day }}: {{ trend.resolved[index] }} resueltos</title>
+        </circle>
+        <text [attr.x]="point(0, index).x" y="227" text-anchor="middle" class="axis-label">
+          {{ day }}
+        </text>
+      }
+    </svg>
+    <div class="chart-footnote">
+      <i class="pi pi-arrow-up-right" aria-hidden="true"></i
+      ><span><strong>79.8%</strong> de las solicitudes de esta semana están resueltas.</span>
+    </div>
+  </article>
+
+  <article class="chart-card category-card">
+    <header>
+      <div>
+        <h2>Tickets por categoría</h2>
+        <p>Distribución de solicitudes</p>
+      </div>
+      <i class="pi pi-chart-pie header-icon" aria-hidden="true"></i>
+    </header>
+    <div class="donut-wrap">
+      <svg
+        viewBox="0 0 160 160"
+        class="donut-chart"
+        role="img"
+        aria-labelledby="category-title category-description"
+      >
+        <title id="category-title">Distribución de 248 tickets por categoría</title>
+        <desc id="category-description">
+          Hardware: 94. Software: 72. Conectividad: 45. Accesos: 37.
+        </desc>
+        <circle
+          cx="80"
+          cy="80"
+          r="60"
+          fill="none"
+          stroke="var(--surface-subtle)"
+          stroke-width="17"
+        />
+        @for (category of categories; track category.label) {
+          <circle
+            cx="80"
+            cy="80"
+            r="60"
+            fill="none"
+            [attr.stroke]="category.color"
+            stroke-width="17"
+            [attr.stroke-dasharray]="category.length + ' ' + (377 - category.length)"
+            [attr.stroke-dashoffset]="category.offset"
+            transform="rotate(-90 80 80)"
+          />
+        }
+        <text x="80" y="80" text-anchor="middle" class="donut-total">248</text>
+        <text x="80" y="100" text-anchor="middle" class="donut-label">tickets en total</text>
+      </svg>
+    </div>
+    <ul class="category-legend">
+      @for (category of categories; track category.label) {
+        <li>
+          <span
+            ><i class="legend-dot" [style.background]="category.color"></i
+            >{{ category.label }}</span
+          ><strong>{{ category.percent }}</strong>
+        </li>
+      }
+    </ul>
+  </article>
+</section>
